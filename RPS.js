@@ -11,7 +11,7 @@ const prompt = require("prompt-sync")();
 
 // getComputerChoice function
 const getComputerChoice = () =>{
-    const options = ['Rock','Paper','Scissors'];
+    const options = ['Rock',]; //'Paper','Scissors'
     var rand = options[Math.random() * options.length>>0];
     return(rand.toLowerCase());
 }
@@ -53,7 +53,7 @@ const singleRound = () =>{
         console.log("You Lost! Your opponent chose rock.");
         return ("lost");
     }else{
-        console.log("Please enter valid input.")
+        console.log("Please enter valid input.");
     }
 }
 
@@ -61,47 +61,45 @@ const singleRound = () =>{
 
 
 
-// best of five rounds ---- single round is looping twice, but the commands after five rounds is only functioning every other loop. 
+// best of five rounds ---- single round is looping twice, but the commands after five rounds is only functioning every other loop.  ------ I WAS CALLING IT TWICE BECAUSE I DIDN'T REALIZE I WAS CALLING IT IN MY IF STATEMENT TOO!!!
 
 const fiveRounds = () =>{
         const isReady = prompt('Welcome to "Rock, Paper, Scissors". Are you ready to play?(y/n): ');
         if (isReady.toLowerCase() == "y"){
-            rounds = 0
+            let rounds = 0;
+            let userPoints = 0;
+            let compPoints = 0;
             while(rounds < 5){
-
-            
-                if(singleRound() == "lost"){
-                    console.log('it returned lost');
+                let SR = singleRound();
+                if(SR == "lost"){
+                    compPoints +=1;
+                    console.log("SCORE: you - " + userPoints + " || computer - " + compPoints);
+                }else if(SR == "won"){
+                    userPoints +=1; /// says woon for undefined as well 
+                    console.log("SCORE: you - " + userPoints + " || computer - " + compPoints);
                 }else{
-                    console.log('it returned won'); /// says woon for undefined as well 
+                    rounds += 1;
+                    console.log(rounds);
+                    console.log("SCORE: you - " + userPoints + " || computer - " + compPoints);
+                    continue;
                 }
                 rounds +=1;
                 console.log(rounds);
+                console.log(userPoints);
+                console.log(compPoints);
 
-                // if(singleRound() == "lost"){
-                //     console.log('it returned lost');
-                // }else{
-                //     console.log('it returned won');
-                // }
-                // // rounds +=1;
-                // // console.log(rounds);
-
-                // if(singleRound() == "lost"){
-                //     console.log('it returned lost');
-                // }else{
-                //     console.log('it returned won');
-                // }
-                // // rounds +=1;
-                // // console.log(rounds);
             }
+            if(userPoints > compPoints ){
+                console.log("You Won! Well done.");
+            }else{
+                console.log("You Lost! Better luck next time.");
+            }
+
     }
 }
 
 
-const test = () => {
-    console.log("this should return the value 5");
-    return(5);
-}
+
 
 
 // run the five rounds of RPS.
