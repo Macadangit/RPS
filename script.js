@@ -134,78 +134,14 @@ Expected output:
 
 // ^^^ this worked as well. 
 
-// ================================================================================================================================
-
-
-const subTitle = document.getElementById("disappear-p");
-const gameBox = document.getElementById("game-window"); // why are these two good but the other two aren't quite working
-const rockBtn = document.getElementById("rock-button");
-const paperBtn = document.getElementById("paper-button");
-const scissorsBtn = document.getElementById("scissors-button");
-
-
-function gameBoxBlinker(event) {
-    event.stopPropagation();
-    subTitle.textContent = "make your selection.";
-    gameBox.removeEventListener("click", gameBoxBlinker); // Pass the correct arguments
-}
-
-gameBox.addEventListener("click", gameBoxBlinker);
-
-
-rockBtn.addEventListener("click", (event) => {
-    subTitle.textContent = "start countdown1"; // I can't manipulate any of the elements outside of this one wtf
-    event.stopPropagation();
-
-});
-
-
-paperBtn.addEventListener("click", (event) => {
-    subTitle.textContent = "start countdown2"; // I can't manipulate any of the elements outside of this one wtf
-    event.stopPropagation();
-});
-
-scissorsBtn.addEventListener("click", () => {
-    subTitle.textContent = "start countdown3"; // I can't manipulate any of the elements outside of this one wtf
-    event.stopPropagation();
-});
-
-
-
-
-
-
-
-//
-
-// the game title shoudl be where the information is displayed
-// click continue should fully disappear and buttons should appear -- maybe the appearing buttons are ambitious?
-
-// ================================================================================================================================
-
-// GAME LOGIC
-const prompt = require("prompt-sync")(); 
-
-// getComputerChoice function
 const getComputerChoice = () =>{
     const options = ['Rock',]; //'Paper','Scissors'
     var rand = options[Math.random() * options.length>>0];
     return(rand.toLowerCase());
 }
 
-// playerSelection function
-
-const playerSelection = () =>{
-    var userSelect = prompt("Choose rock, paper, or scissors: ");
-    return(userSelect.toLowerCase());
-}
-
-
-
-// Single round version (Game flow logic)---------------------------------------- This works
-
 const singleRound = () =>{
-    let PS = playerSelection();
+    let PS = playerSelection;
     let GC = getComputerChoice();
     console.log(PS) //for debugging
     console.log(GC) //for debugging
@@ -233,6 +169,72 @@ const singleRound = () =>{
         console.log("Please enter valid input.");
     }
 }
+
+
+
+// ================================================================================================================================
+
+
+const subTitle = document.getElementById("disappear-p");
+const gameBox = document.getElementById("game-window"); // why are these two good but the other two aren't quite working
+const rockBtn = document.getElementById("rock-button");
+const paperBtn = document.getElementById("paper-button");
+const scissorsBtn = document.getElementById("scissors-button");
+
+
+
+function gameBoxBlinker(event) {
+    event.stopPropagation();
+    subTitle.textContent = "make your selection.";
+    gameBox.removeEventListener("click", gameBoxBlinker); // Pass the correct arguments
+}
+
+gameBox.addEventListener("click", gameBoxBlinker);
+
+
+rockBtn.addEventListener("click", (event) => {
+    playerSelection = 'rock';
+    singleRound();    
+    event.stopPropagation();
+
+});
+
+
+paperBtn.addEventListener("click", (event) => {
+    playerSelection = 'paper';
+    singleRound();
+    event.stopPropagation();
+});
+
+scissorsBtn.addEventListener("click", (event) => {
+    playerSelection = "scissors";
+    singleRound();
+    event.stopPropagation();
+});
+
+
+
+
+
+
+
+//
+
+// the game title shoudl be where the information is displayed
+// click continue should fully disappear and buttons should appear -- maybe the appearing buttons are ambitious?
+
+// ================================================================================================================================
+
+// GAME LOGIC
+const prompt = require("prompt-sync")();  // this breaks the whole event listener thing for some reason
+
+// getComputerChoice function
+
+
+
+// Single round version (Game flow logic)---------------------------------------- This works
+
+
 
 // Because singleRound() is initialized to undefined, the first round plays out and then doesn't return a value. 
 
