@@ -143,12 +143,14 @@ const rockBtn = document.getElementById("rock-button");
 const paperBtn = document.getElementById("paper-button");
 const scissorsBtn = document.getElementById("scissors-button");
 
-gameBox.addEventListener("click", (event) => {
-    event.stopPropagation();
 
+function gameBoxBlinker(event) {
+    event.stopPropagation();
     subTitle.textContent = "make your selection.";
-    
-});
+    gameBox.removeEventListener("click", gameBoxBlinker); // Pass the correct arguments
+}
+
+gameBox.addEventListener("click", gameBoxBlinker);
 
 
 rockBtn.addEventListener("click", (event) => {
